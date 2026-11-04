@@ -45,6 +45,8 @@ int	ft_printf(const char *s, ...)
 
 	len = 0;
 	i = 0;
+	if (!s || write(1,"",0) == -1)
+		return -1;
 	va_start(args, s);
 	while (s[i])
 	{
