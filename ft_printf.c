@@ -68,6 +68,8 @@ int	ft_printf(const char *s, ...)
 				return (-1);
 			i++;
 		}
+		else if (s[i] == '%' && s[i + 1] == '\0')
+			return (-1);
 		else if (ft_check_error(ft_putchar(s[i], &len), args) == -1)
 			return (-1);
 		i++;

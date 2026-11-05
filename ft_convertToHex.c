@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-int printhex(char *str, int i, size_t *len)
+int	printhex(char *str, int i, size_t *len)
 {
 	while (i > 0)
 	{
