@@ -46,7 +46,6 @@ int	ft_format(char c, va_list args, size_t *len)
 			return (-1);
 		return (ft_putchar(c, len));
 	}
-	return (0);
 }
 
 int	ft_printf(const char *s, ...)
