@@ -12,21 +12,28 @@
 
 #include "ft_printf.h"
 
-void	ft_putnbr(int n, size_t *len)
+int	ft_putnbr(int n, size_t *len)
 {
 	long	nb;
 
 	nb = n;
 	if (nb < 0)
 	{
-		ft_putchar('-', len);
+		if (ft_putchar('-', len) == -1)
+			return (-1);
 		nb = -nb;
 	}
 	if (nb > 9)
 	{
-		ft_putnbr(nb / 10, len);
-		ft_putchar(nb % 10 + '0', len);
+		if (ft_putnbr(nb / 10, len) == -1)
+			return (-1);
+		if (ft_putchar(nb % 10 + '0', len))
+			return (-1);
 	}
 	else
-		ft_putchar(nb + '0', len);
+	{
+		if (ft_putchar(nb + '0', len))
+			return (-1);
+	}
+	return (0);
 }

@@ -12,7 +12,19 @@
 
 #include "ft_printf.h"
 
-void	ft_putadress(void *ptr, size_t *len)
+int	printaddress(char *str, int i, size_t *len)
+{
+	if (ft_putstr("0x", len) == -1)
+		return (-1);
+	while (i > 0)
+	{
+		if (ft_putchar(str[--i], len) == -1)
+			return (-1);
+	}
+	return (0);
+}
+
+int	ft_putadress(void *ptr, size_t *len)
 {
 	char			str[32];
 	char			*base16;
@@ -23,20 +35,12 @@ void	ft_putadress(void *ptr, size_t *len)
 	address = (unsigned long)ptr;
 	base16 = "0123456789abcdef";
 	if (!ptr)
-	{
-		ft_putstr("(nil)", len);
-		return ;
-	}
+		return (ft_putstr("(nil)", len) == -1);
 	while (address > 0)
 	{
 		str[i] = base16[address % 16];
 		address /= 16;
 		i++;
 	}
-	ft_putstr("0x", len);
-	while (i > 0)
-	{
-		write(1, &str[--i], 1);
-		*len += 1;
-	}
+	return (printaddress(str, i, len));
 }

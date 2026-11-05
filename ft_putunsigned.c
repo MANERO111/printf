@@ -12,9 +12,14 @@
 
 #include "ft_printf.h"
 
-void	ft_put_unsigned(unsigned int n, size_t *len)
+int	ft_put_unsigned(unsigned int n, size_t *len)
 {
 	if (n > 9)
-		ft_put_unsigned(n / 10, len);
-	ft_putchar(n % 10 + '0', len);
+	{
+		if (ft_put_unsigned(n / 10, len) == -1)
+			return (-1);
+	}
+	if (ft_putchar(n % 10 + '0', len) == -1)
+		return (-1);
+	return (0);
 }

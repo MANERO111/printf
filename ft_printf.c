@@ -12,29 +12,41 @@
 
 #include "ft_printf.h"
 
-void	ft_format(char c, va_list args, size_t *len)
+int	ft_check_error(int status, va_list args)
+{
+	if (status == -1)
+	{
+		va_end(args);
+		return (-1);
+	}
+	return (0);
+}
+
+int	ft_format(char c, va_list args, size_t *len)
 {
 	if (c == 'c')
-		ft_putchar(va_arg(args, int), len);
+		return (ft_putchar(va_arg(args, int), len));
 	else if (c == 'd' || c == 'i')
-		ft_putnbr(va_arg(args, int), len);
+		return (ft_putnbr(va_arg(args, int), len));
 	else if (c == 's')
-		ft_putstr(va_arg(args, char *), len);
+		return (ft_putstr(va_arg(args, char *), len));
 	else if (c == 'p')
-		ft_putadress(va_arg(args, void *), len);
+		return (ft_putadress(va_arg(args, void *), len));
 	else if (c == 'X')
-		ft_converttohex(va_arg(args, int), 1, len);
+		return (ft_converttohex(va_arg(args, unsigned int), 1, len));
 	else if (c == 'x')
-		ft_converttohex(va_arg(args, int), 0, len);
+		return (ft_converttohex(va_arg(args, unsigned int), 0, len));
 	else if (c == 'u')
-		ft_put_unsigned(va_arg(args, unsigned int), len);
+		return (ft_put_unsigned(va_arg(args, unsigned int), len));
 	else if (c == '%')
-		ft_putchar('%', len);
+		return (ft_putchar('%', len));
 	else
 	{
-		ft_putchar('%', len);
-		ft_putchar(c, len);
+		if (ft_putchar('%', len) == -1)
+			return (-1);
+		return (ft_putchar(c, len));
 	}
+	return (0);
 }
 
 int	ft_printf(const char *s, ...)
@@ -45,18 +57,19 @@ int	ft_printf(const char *s, ...)
 
 	len = 0;
 	i = 0;
-	if (!s || write(1,"",0) == -1)
-		return -1;
+	if (!s)
+		return (-1);
 	va_start(args, s);
 	while (s[i])
 	{
 		if (s[i] == '%' && s[i + 1] != '\0')
 		{
-			ft_format(s[i + 1], args, &len);
+			if (ft_check_error(ft_format(s[i + 1], args, &len), args) == -1)
+				return (-1);
 			i++;
 		}
-		else
-			ft_putchar(s[i], &len);
+		else if (ft_check_error(ft_putchar(s[i], &len), args) == -1)
+			return (-1);
 		i++;
 	}
 	va_end(args);
