@@ -35,7 +35,7 @@ int	ft_putadress(void *ptr, size_t *len)
 	address = (unsigned long)ptr;
 	base16 = "0123456789abcdef";
 	if (!ptr)
-		return (ft_putstr("(nil)", len) == -1);
+		return (ft_putstr("(nil)", len));
 	while (address > 0)
 	{
 		str[i] = base16[address % 16];

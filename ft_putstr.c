@@ -24,7 +24,6 @@ int	ft_putstr(char *str, size_t *len)
 		if (ft_putchar(str[i], len) == -1)
 			return (-1);
 		i++;
-		*len += 1;
 	}
 	return (0);
 }
