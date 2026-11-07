@@ -18,7 +18,7 @@ int	ft_putstr(char *str, size_t *len)
 
 	i = 0;
 	if (!str)
-		ft_putstr("(null)", len);
+		return (ft_putstr("(null)", len));
 	while (str && str[i] != '\0')
 	{
 		if (ft_putchar(str[i], len) == -1)
